@@ -15,6 +15,7 @@ import {
 
 const gemini = new GeminiService();
 
+// Fixed App component
 export default function App(): JSX.Element {    // State
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
