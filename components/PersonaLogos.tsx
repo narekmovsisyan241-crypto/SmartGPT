@@ -63,7 +63,7 @@ const EduMesh = () => {
     );
 }
 
-const CommonCanvas = ({ children }: { children: React.ReactNode }) => (
+const CommonCanvas = ({ children }: { children?: React.ReactNode }) => (
     <div className="w-8 h-8">
         <Canvas camera={{ position: [0, 0, 3] }}>
             <ambientLight intensity={1} />

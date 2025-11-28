@@ -6,8 +6,6 @@ interface LiveSessionProps {
     onClose: () => void;
 }
 
-const API_KEY = process.env.API_KEY || '';
-
 export const LiveSession: React.FC<LiveSessionProps> = ({ isOpen, onClose }) => {
     const [status, setStatus] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -63,7 +61,7 @@ export const LiveSession: React.FC<LiveSessionProps> = ({ isOpen, onClose }) => 
         
         const init = async () => {
             setStatus('connecting');
-            const ai = new GoogleGenAI({ apiKey: API_KEY });
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             
             const ac = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
             setAudioContext(ac);
