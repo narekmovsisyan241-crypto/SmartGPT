@@ -71,6 +71,8 @@ export default function App() {
         setShowHistory(false);
     };
 
+        localStorage.setItem('smartgpt_sessions', JSON.stringify([newSession, ...sessions]));
+    
     const handleLogin = () => {
         setIsLoggedIn(true);
         setUser({
