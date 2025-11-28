@@ -15,8 +15,7 @@ import {
 
 const gemini = new GeminiService();
 
-export default function App(: JSX.Element) {
-    // State
+export default function App(): JSX.Element {    // State
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const [currentPersona, setCurrentPersona] = useState<Persona>(Persona.SmartGPT);
