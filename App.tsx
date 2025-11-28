@@ -10,7 +10,7 @@ import {
     Trash2, Copy, Search, ShieldCheck, 
     MessageSquare, Box, Monitor, BookOpen,
     Zap, Mic, Cpu, RefreshCw, X, Menu,
-    User as UserIcon
+    User as UserIcon, Download
 } from 'lucide-react';
 
 const gemini = new GeminiService();
@@ -26,6 +26,7 @@ export default function App() {
     const [isThinking, setIsThinking] = useState(false);
     const [mediaFiles, setMediaFiles] = useState<File[]>([]);
     const [showLive, setShowLive] = useState(false);
+    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     
     // Config toggles
     const [imgSize, setImgSize] = useState<'1K'|'2K'|'4K'>('1K');
@@ -34,7 +35,7 @@ export default function App() {
 
     const chatContainerRef = useRef<HTMLDivElement>(null);
 
-    // Initial Load
+    // Initial Load & PWA Install Listener
     useEffect(() => {
         const savedSessions = localStorage.getItem('smartgpt_sessions');
         if (savedSessions) {
@@ -42,6 +43,17 @@ export default function App() {
         } else {
             createNewSession();
         }
+
+        const handleBeforeInstallPrompt = (e: any) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+        };
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
     }, []);
 
     // Scroll to bottom
@@ -80,6 +92,15 @@ export default function App() {
         });
     };
 
+    const handleInstallApp = async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            setDeferredPrompt(null);
+        }
+    };
+
     const handleDeleteSession = (e: React.MouseEvent, id: string) => {
         e.stopPropagation();
         const updated = sessions.filter(s => s.id !== id);
@@ -91,14 +112,6 @@ export default function App() {
             createNewSession();
         }
     }
-
-    const handlePurgeAll = () => {
-        if(window.confirm("WARNING: INITIATING FULL SYSTEM PURGE. ALL DATA WILL BE LOST. CONFIRM?")) {
-            setSessions([]);
-            localStorage.removeItem('smartgpt_sessions');
-            createNewSession();
-        }
-    };
 
     const handleStop = () => {
         setIsThinking(false);
@@ -250,7 +263,7 @@ export default function App() {
     }
 
     return (
-        <div className="relative w-full h-screen text-white flex overflow-hidden font-rajdhani bg-black selection:bg-cyan-500/30">
+        <div className="relative w-full h-screen text-white flex overflow-hidden font-rajdhani bg-transparent selection:bg-cyan-500/30">
             <FuturisticBackground />
             <LiveSession isOpen={showLive} onClose={() => setShowLive(false)} />
 
@@ -271,11 +284,18 @@ export default function App() {
                     <button className="md:hidden ml-auto text-white/50" onClick={() => setShowHistory(false)}><X size={20} /></button>
                 </div>
                 
-                <div className="px-6 mb-6">
+                <div className="px-6 mb-6 space-y-3">
                     <button onClick={createNewSession} className="w-full py-3 px-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(0,243,255,0.1)] text-cyan-300 hover:text-white font-bold tracking-wide transition-all flex items-center justify-center gap-2 group">
                         <MessageSquare size={16} className="group-hover:rotate-12 transition-transform" />
                         <span>NEW SESSION</span>
                     </button>
+                    
+                    {deferredPrompt && (
+                        <button onClick={handleInstallApp} className="w-full py-3 px-4 rounded-xl border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 hover:text-white font-bold tracking-wide transition-all flex items-center justify-center gap-2 animate-pulse">
+                            <Download size={16} />
+                            <span>INSTALL SYSTEM</span>
+                        </button>
+                    )}
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-4 space-y-1 no-scrollbar">
