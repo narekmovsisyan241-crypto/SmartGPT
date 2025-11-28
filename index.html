@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartGPT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              orbitron: ['Orbitron', 'sans-serif'],
+              rajdhani: ['Rajdhani', 'sans-serif'],
+            },
+            animation: {
+              'spin-slow': 'spin 10s linear infinite',
+              'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'scan': 'scan 4s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              scan: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' },
+              }
+            },
+            colors: {
+              'cyan-glow': '#00f3ff',
+              'glass': 'rgba(255, 255, 255, 0.05)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body { margin: 0; overflow: hidden; background: #000; color: white; font-family: 'Rajdhani', sans-serif; }
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: #000; }
+      ::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 0px; }
+      
+      .tech-border {
+        position: relative;
+        clip-path: polygon(
+          10px 0, 100% 0, 
+          100% calc(100% - 10px), calc(100% - 10px) 100%, 
+          0 100%, 0 10px
+        );
+      }
+      
+      .tech-panel {
+        background: rgba(5, 10, 20, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 243, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+      }
+
+      .glow-text {
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^9.4.0",
+    "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^10.7.7",
+    "three": "https://aistudiocdn.com/three@^0.181.2",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

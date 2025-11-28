@@ -1,0 +1,9 @@
+{
+  "name": "SmartGPT",
+  "description": "The ultimate AI assistant featuring specialized personas: SmartGPT, BusinessGPT, EducationGPT, and Uncensored. Features 3D visuals, multimodal inputs, and deep reasoning.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
