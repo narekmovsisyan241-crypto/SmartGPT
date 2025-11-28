@@ -40,7 +40,9 @@ export class GeminiService {
   
   private getAi() {
     // API key must be obtained exclusively from process.env.API_KEY
-    return new GoogleGenAI({ apiKey: process.env.API_KEY })
+    return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  }
+
   async generateMessage(
     prompt: string,
     history: ChatMessage[],

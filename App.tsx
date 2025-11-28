@@ -15,8 +15,8 @@ import {
 
 const gemini = new GeminiService();
 
-// Fixed App component
-export default function App(): JSX.Element {    // State
+export default function App() {
+    // State
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const [currentPersona, setCurrentPersona] = useState<Persona>(Persona.SmartGPT);
@@ -71,8 +71,6 @@ export default function App(): JSX.Element {    // State
         setShowHistory(false);
     };
 
-        localStorage.setItem('smartgpt_sessions', JSON.stringify([newSession, ...sessions]));
-    
     const handleLogin = () => {
         setIsLoggedIn(true);
         setUser({
